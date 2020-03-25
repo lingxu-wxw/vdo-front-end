@@ -97,6 +97,7 @@
 .\" italicized, but restore the original font when we're done.
 .ds bool \fR{ \fP\fI enabled \fP\fR | \fP\fI disabled \fP\fR } \fP
 .ds writePolicy \fR{ \fP\fI sync \fP\fR | \fP\fI async \fP\fR | \fP\fI auto \fP\fR} \fP
+.ds compressPolicy \fR{ \fP\fI LZ4 \fP\fR | \fP\fI QAT \fP\fR | \fP\fI ZLIB \fP\fR} \fP
 .ds targetSpec \fR{ \fP\-\-all\fP | \fP\-\-name=\fIvolume\fP\fR }\fP
 .ds targetSpecRequired \*[targetSpec]\fR (required)\fP
 .
@@ -120,6 +121,8 @@ vdo \- manage kernel VDO devices and related configuration information
 .B activate
 |
 .B changeWritePolicy
+|
+.B changeCompressPolicy
 |
 .B create
 |
@@ -181,6 +184,18 @@ Applicable options include:
 \-\-verbose
 .endOptionList
 .TP
+.B changeCompressPolicy
+Modifies the compress policy of one or all running VDO
+volumes. This command must be run with root privileges.
+Applicable options include:
+.startOptionList
+\*[targetSpecRequired]
+\-\-compressPolicy=\*[compressPolicy]\fR (required)\fP
+\-\-confFile=\fIfile\fP
+\-\-logfile=\fIfile\fP
+\-\-verbose
+.endOptionList
+.TP
 .B create
 Creates a VDO volume and its associated index and makes it available. If
 \fB\-\-activate=disabled\fP is specified the VDO volume is created but not made
@@ -219,6 +234,7 @@ Applicable options include:
 \-\-vdoPhysicalThreads=\fIthread count\fP
 \-\-vdoSlabSize=\fIsize\fP
 \-\-writePolicy=\*[writePolicy]
+\-\-compressPolicy=\*[compressPolicy]
 \-\-confFile=\fIfile\fP
 \-\-logfile=\fIfile\fP
 \-\-verbose
@@ -683,6 +699,21 @@ in this mode.
 VDO will check the storage device and determine whether it supports
 flushes. If it does, VDO will run in async mode, otherwise it will run
 in sync mode. This is the default.
+.RE
+.TP
+.B \-\-compressPolicy=\*[compressPolicy]
+Specifies the compress policy:
+.RS
+.TP
+.B LZ4
+VDO will use LZ4 algorithm to compress data.
+.TP
+.B QAT
+VDO will use QAT algorithm to compress data. \fBThis policy is not 
+supported if the underlying storage does not have QAT hardware.\fP
+.TP
+.B ZLIB
+VDO will use LZ4 algorithm to compress data.
 .RE
 .
 .
