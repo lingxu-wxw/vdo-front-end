@@ -287,30 +287,6 @@ class ChangeWritePolicyOperation(VDOOperation):
     vdo.setWritePolicy(self._newWritePolicy)
 
 ########################################################################
-class ChangeCompressPolicyOperation(VDOOperation):
-  """Implements the changeCompressPolicy command."""
-
-  ######################################################################
-  # Overridden methods
-  ######################################################################
-  def __init__(self):
-    super(ChangeCompressPolicyOperation, self).__init__()
-
-  ######################################################################
-  @exclusivelock
-  def execute(self, args):
-    self._newCompressPolicy = getattr(args, 'compressPolicy')
-    if self._newCompressPolicy is None:
-      return
-    self.applyToVDOs(args, self._changeCompressPolicy, readonly=False)
-
-  ######################################################################
-  # Protected methods
-  ######################################################################
-  def _changeCompressPolicy(self, args, vdo):
-    vdo.setCompressPolicy(self._newCompressPolicy)
-
-########################################################################
 class CreateOperation(VDOOperation):
   """Implements the create command."""
 

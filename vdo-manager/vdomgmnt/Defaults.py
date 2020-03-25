@@ -111,8 +111,6 @@ class Defaults(object):
   vdoTargetName = 'vdo'
   writePolicy = 'auto'
   writePolicyChoices = ['async', 'sync', 'auto']
-  compressPolicy = 'LZ4'
-  compressPolicyChoices = ['LZ4', 'QAT', 'ZLIB']
 
   ######################################################################
   # Public methods
