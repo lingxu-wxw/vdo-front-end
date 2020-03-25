@@ -17,6 +17,7 @@
       readcache: enabled
       readcachesize: 64M
       writepolicy: async
+      compresspolicy: LZ4
       emulate512: enabled
       slabsize: 16G
       indexmem: 0.5

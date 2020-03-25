@@ -153,6 +153,13 @@ options:
               writes when data has been cached for writing to stable
               storage.
         required: false
+    compresspolicy:
+        description:
+            - Specifies the compress policy of the VDO volume. The
+              default 'LZ4' mode acknowledges uses LZ4 algorithm to
+              compress data. The 'QAT' mode and 'ZLIB' mode acknowledges
+              uses QAT algorithm and ZLIB algorithm.
+        required: false
     indexmem:
         description:
             - Specifies the amount of index memory in gigabytes.  The
@@ -416,6 +423,8 @@ def run_module():
         slabsize=dict(type='str', required=False),
         writepolicy=dict(choices=['sync', 'async', 'auto'],
                          required=False, default=None),
+        compresspolicy=dict(choices=['LZ4', 'QAT', 'ZLIB']),
+                         required=False, default=None),
         indexmem=dict(type='str', required=False),
         indexmode=dict(choices=['dense', 'sparse'],
                        required=False, default=None),
@@ -551,6 +560,7 @@ def run_module():
             'Read cache': 'readcache',
             'Read cache size': 'readcachesize',
             'Configured write policy': 'writepolicy',
+            'Configured compress policy': 'compresspolicy',
             'Acknowledgement threads': 'ackthreads',
             'Bio submission threads': 'biothreads',
             'CPU-work threads': 'cputhreads',
@@ -705,6 +715,53 @@ def run_module():
                         result['changed'] = True
                     else:
                         module.fail_json(msg="Changing write policy on "
+                                             "VDO volume %s failed."
+                                         % desiredvdo, rc=rc, err=err)
+            if 'compresspolicy' in diffparams.keys():
+                compresspolmod = diffparams['compresspolmod']
+                if compresspolmod == 'LZ4':
+                     rc, _, err = module.run_command("%s "
+                                                    "changeCompressPolicy "
+                                                    "--name=%s "
+                                                    "--compressPolicy=%s"
+                                                    % (vdo_cmd,
+                                                       desiredvdo,
+                                                       compresspolmod))
+
+                    if rc == 0:
+                        result['changed'] = True
+                    else:
+                        module.fail_json(msg="Changing compress policy on "
+                                             "VDO volume %s failed."
+                                         % desiredvdo, rc=rc, err=err)
+                if compresspolmod == 'QAT':
+                     rc, _, err = module.run_command("%s "
+                                                    "changeCompressPolicy "
+                                                    "--name=%s "
+                                                    "--compressPolicy=%s"
+                                                    % (vdo_cmd,
+                                                       desiredvdo,
+                                                       compresspolmod))
+
+                    if rc == 0:
+                        result['changed'] = True
+                    else:
+                        module.fail_json(msg="Changing compress policy on "
+                                             "VDO volume %s failed."
+                                         % desiredvdo, rc=rc, err=err)
+                if compresspolmod == 'ZLIB':
+                     rc, _, err = module.run_command("%s "
+                                                    "changeCompressPolicy "
+                                                    "--name=%s "
+                                                    "--compressPolicy=%s"
+                                                    % (vdo_cmd,
+                                                       desiredvdo,
+                                                       compresspolmod))
+
+                    if rc == 0:
+                        result['changed'] = True
+                    else:
+                        module.fail_json(msg="Changing compress policy on "
                                              "VDO volume %s failed."
                                          % desiredvdo, rc=rc, err=err)
 
