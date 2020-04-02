@@ -545,6 +545,7 @@ def run_module():
                            'Read cache',
                            'Read cache size',
                            'Configured write policy',
+                           'Configured compress policy',
                            'Compression',
                            'Deduplication']
 

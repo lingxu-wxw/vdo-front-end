@@ -976,7 +976,7 @@ class VDOService(Service):
 
         self._performRunningSetCompressPolicy()
 
-        # The setting of the write policy is finished.
+        # The setting of the compress policy is finished.
         self._setOperationState(self.OperationState.finished)
 
   ######################################################################
