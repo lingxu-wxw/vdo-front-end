@@ -927,7 +927,7 @@ class VDOService(Service):
       self.config.addVdo(self.getName(), self, True)
 
       if self.running():
-        s elf._announce(
+        self._announce(
           _("Note: Changes will not apply until VDO {0} is restarted").format(
             self.getName()))
 
@@ -1376,7 +1376,7 @@ class VDOService(Service):
     return service._writePolicy
 
   ######################################################################
-  def _computedWritePolicy(self):
+  def _computedCompressPolicy(self):
     """Return the compress policy of the instance.
 
     If this instance's compress policy was not explicitly set and there is an

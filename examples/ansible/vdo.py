@@ -718,7 +718,7 @@ def run_module():
                                              "VDO volume %s failed."
                                          % desiredvdo, rc=rc, err=err)
             if 'compresspolicy' in diffparams.keys():
-                compresspolmod = diffparams['compresspolmod']
+                compresspolmod = diffparams['compresspolicy']
                 if compresspolmod == 'LZ4':
                      rc, _, err = module.run_command("%s "
                                                     "changeCompressPolicy "
