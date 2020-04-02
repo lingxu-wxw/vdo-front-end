@@ -1923,11 +1923,11 @@ class VDOService(Service):
     """
     if not self.previousOperationFailure:
       self.log.debug(
-        _("No set write policy recovery necessary for VDO volume {0}").format(
+        _("No set compress policy recovery necessary for VDO volume {0}").format(
           self.getName()))
     elif self.operationState != self.OperationState.beginRunningSetCompressPolicy:
       msg = _("Previous operation failure for VDO volume {0} not from"
-              " set write policy").format(self.getName())
+              " set compress policy").format(self.getName())
       raise VDOServiceError(msg, exitStatus = DeveloperExitStatus)
     else:
       # Perform the recovery only if the vdo is actually running (indicating
