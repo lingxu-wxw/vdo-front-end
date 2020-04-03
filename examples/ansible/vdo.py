@@ -423,7 +423,7 @@ def run_module():
         slabsize=dict(type='str', required=False),
         writepolicy=dict(choices=['sync', 'async', 'auto'],
                          required=False, default=None),
-        compresspolicy=dict(choices=['LZ4', 'QAT', 'ZLIB']),
+        compresspolicy=dict(choices=['LZ4', 'QAT', 'ZLIB'],
                          required=False, default=None),
         indexmem=dict(type='str', required=False),
         indexmode=dict(choices=['dense', 'sparse'],
@@ -721,7 +721,7 @@ def run_module():
             if 'compresspolicy' in diffparams.keys():
                 compresspolmod = diffparams['compresspolicy']
                 if compresspolmod == 'LZ4':
-                     rc, _, err = module.run_command("%s "
+                    rc, _, err = module.run_command("%s "
                                                     "changeCompressPolicy "
                                                     "--name=%s "
                                                     "--compressPolicy=%s"
@@ -736,7 +736,7 @@ def run_module():
                                              "VDO volume %s failed."
                                          % desiredvdo, rc=rc, err=err)
                 if compresspolmod == 'QAT':
-                     rc, _, err = module.run_command("%s "
+                    rc, _, err = module.run_command("%s "
                                                     "changeCompressPolicy "
                                                     "--name=%s "
                                                     "--compressPolicy=%s"
@@ -751,7 +751,7 @@ def run_module():
                                              "VDO volume %s failed."
                                          % desiredvdo, rc=rc, err=err)
                 if compresspolmod == 'ZLIB':
-                     rc, _, err = module.run_command("%s "
+                    rc, _, err = module.run_command("%s "
                                                     "changeCompressPolicy "
                                                     "--name=%s "
                                                     "--compressPolicy=%s"
