@@ -26,4 +26,5 @@
       cputhreads: 6
       logicalthreads: 6
       packerthreads: 6
+      journalthreads: 6
       physicalthreads: 2

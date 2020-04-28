@@ -213,6 +213,13 @@ options:
               to 100 (lower numbers are preferable due to overhead).
               The default is 2.
         required: false
+    journalthreads:
+        description:
+            - Specifies the number of threads to use for recovery 
+              journal . Valid values are integer values from 1 to
+              100 (lower numbers are preferable due to overhead).
+              The default is 2.
+        required: false
     physicalthreads:
         description:
             - Specifies the number of threads across which to
@@ -386,6 +393,9 @@ def add_vdooptions(params):
     if ('packerthreads' in params) and (params['packerthreads'] is not None):
         options.append("--vdoPackerThreads=" + params['packerthreads'])    
 
+    if ('journalthreads' in params) and (params['journalthreads'] is not None):
+        options.append("--vdoJournalThreads=" + params['journalthreads'])   
+
     vdocmdoptions = ' '.join(options)
     return vdocmdoptions
 
@@ -433,6 +443,7 @@ def run_module():
         cputhreads=dict(type='str', required=False),
         logicalthreads=dict(type='str', required=False),
         packerthreads=dict(type='str', required=False),
+        journalthreads=dict(type='str', required=False),
         physicalthreads=dict(type='str', required=False)
     )
 
@@ -540,7 +551,8 @@ def run_module():
                            'Block map cache size',
                            'CPU-work threads',
                            'Logical threads',
-                           'Packer threads'
+                           'Packer threads',
+                           'Journal threads',
                            'Physical threads',
                            'Read cache',
                            'Read cache size',
@@ -567,6 +579,7 @@ def run_module():
             'CPU-work threads': 'cputhreads',
             'Logical threads': 'logicalthreads',
             'Packer threads': 'packerthreads',
+            'Journal threads': 'journalthreads',
             'Physical threads': 'physicalthreads'
         }
 

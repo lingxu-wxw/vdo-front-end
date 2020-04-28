@@ -211,6 +211,7 @@ suffix is optional""").format(options
                   self._vdoLogicalThreadsOptionParser(),
                   self._vdoLogLevelOptionParser(),
                   self._vdoPackerThreadsOptionParser(),
+                  self._vdoJournalThreadsOptionParser(),
                   self._vdoPhysicalThreadsOptionParser(),
                   self._vdoSlabSizeOptionParser(),
                   self._writePolicyOptionParser(),
@@ -363,6 +364,7 @@ suffix is optional""").format(options
                                      "vdoHashZoneThreads",
                                      "vdoLogicalThreads",
                                      "vdoPackerThreads",
+                                     "vdoJournalThreads",
                                      "vdoPhysicalThreads"]
     self._modifyCommandParser = subparserAdder.add_parser(
       "modify",
@@ -377,6 +379,7 @@ suffix is optional""").format(options
                  self._vdoHashZoneThreadsOptionParser(noDefault = True),
                  self._vdoLogicalThreadsOptionParser(noDefault = True),
                  self._vdoPackerThreadsOptionParser(noDefault = True),
+                 self._vdoJournalThreadsOptionParser(noDefault = True),
                  self._vdoPhysicalThreadsOptionParser(noDefault = True),
                  self.__commonOptions],
       help = highLevelHelp,
@@ -984,6 +987,31 @@ suffix is optional""").format(options
                                  """)
       .format(min = Defaults.packerThreadsMin,
               max = Defaults.packerThreadsMax,
+              defaultHelp = defaultHelp))
+
+    return parser
+
+  ####################################################################
+  def _vdoJournalThreadsOptionParser(self, noDefault = False):
+    """
+    Arguments:
+      noDefault (boolean) - if True, no default is mentioned in the help text
+    """
+    defaultHelp = ("" if noDefault else
+                   _("The default is {0}.").format(Defaults.journalThreads))
+
+    parser = argparse.ArgumentParser(add_help = False)
+    parser.add_argument("--vdoJournalThreads",
+                        type = self.__optionCheck(
+                                  Defaults.checkThreadCount1_100),
+                        metavar = "<threadCount>",
+                        help = _("""
+      Specifies the number of threads that to use for recovery journal.
+      The value must be at least {min} and less than or equal to {max}. 
+      {defaultHelp}
+                                 """)
+      .format(min = Defaults.journalThreadsMin,
+              max = Defaults.journalThreadsMax,
               defaultHelp = defaultHelp))
 
     return parser

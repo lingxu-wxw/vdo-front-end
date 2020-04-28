@@ -138,6 +138,7 @@ class VDOService(Service):
     maxDiscardSize (SizeString): the max discard size for this VDO volume.
     packerThreads (int): Number of threads which pack compressed block 
       of data.
+    journalThreads (int): Number of threads to use for recovery journal.
     physicalSize (SizeString): The physical size of this VDO volume.
     physicalThreads (int): Number of threads across which to subdivide parts
       of the VDO processing based on physical block addresses.
@@ -171,6 +172,7 @@ class VDOService(Service):
   vdoMaxDiscardSizeKey       = _("Max discard size")
   vdoMdRaid5ModeKey          = _("MD RAID5 mode")
   vdoPackerThreadsKey        = _("Packer threads")
+  vdoJournalThreadsKey       = _("Journal threads")
   vdoPhysicalSizeKey         = _("Physical size")
   vdoPhysicalThreadsKey      = _("Physical threads")
   vdoStatisticsKey           = _("VDO statistics")
@@ -196,6 +198,7 @@ class VDOService(Service):
     'vdoHashZoneThreads'    : 'hashZoneThreads',
     'vdoLogicalThreads'     : 'logicalThreads',
     'vdoPackerThreads'      : 'packerThreads',
+    'vdoJournalThreads'     : 'journalThreads',
     'vdoPhysicalThreads'    : 'physicalThreads',
   }
 
@@ -685,6 +688,7 @@ class VDOService(Service):
     status[self.vdoHashZoneThreadsKey] = self.hashZoneThreads
     status[self.vdoLogicalThreadsKey] = self.logicalThreads
     status[self.vdoPackerThreadsKey] = self.packerThreads
+    status[self.vdoJournalThreadsKey] = self.journalThreads
     status[self.vdoPhysicalThreadsKey] = self.physicalThreads
     status[_("Slab size")] = str(self.slabSize)
     status[_("Configured write policy")] = self.writePolicy
@@ -1005,7 +1009,8 @@ class VDOService(Service):
             "logicalThreads",
             "maxDiscardSize",
             "_operationState",
-            "packerThreads"
+            "packerThreads",
+            "journalThreads",
             "physicalSize",
             "physicalThreads",
             "slabSize",
@@ -1185,6 +1190,8 @@ class VDOService(Service):
     self.mdRaid5Mode = Defaults.mdRaid5Mode
     self.packerThreads = self._defaultIfNone(kw, 'vdoPackerThreads',
                                             Defaults.packerThreads)
+    self.journalThreads = self._defaultIfNone(kw, 'vdoJournalThreads',
+                                            Defaults.journalThreads)
     self.physicalSize = SizeString("0")
     self.physicalThreads = self._defaultIfNone(kw, 'vdoPhysicalThreads',
                                                Defaults.physicalThreads)
@@ -1530,6 +1537,7 @@ class VDOService(Service):
                                   "hash", str(self.hashZoneThreads),
                                   "logical", str(self.logicalThreads),
                                   "packer", str(self.packerThreads),
+                                  "journal", str(self.journalThreads),
                                   "physical", str(self.physicalThreads)])
     vdoConf = " ".join(["0", str(numSectors), Defaults.vdoTargetName,
                         "V2", self.device,

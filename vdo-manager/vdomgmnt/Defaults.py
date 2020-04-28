@@ -95,6 +95,9 @@ class Defaults(object):
   packerThreads = 2
   packerThreadsMax = 100
   packerThreadsMin = 1
+  journalThreads = 2
+  journalThreadsMax = 100
+  journalThreadsMin = 1
   physicalThreadOverheadMB = 10  # MB
   physicalThreads = 1
   physicalThreadsMax = 16

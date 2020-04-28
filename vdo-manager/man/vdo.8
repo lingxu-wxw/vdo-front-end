@@ -71,6 +71,9 @@
 .ds packerThreads 2
 .ds packerThreadsMin 1
 .ds packerThreadsMax 100
+.ds journalThreads 2
+.ds journalThreadsMin 1
+.ds journalThreadsMax 100
 .ds pageSizeDefault 4096
 .ds physicalThreadOverheadMB 10
 .ds physicalThreadsDefault 1
@@ -231,6 +234,7 @@ Applicable options include:
 \-\-vdoLogLevel=\fIlevel\fP
 \-\-vdoLogicalSize=\fIsize\fP
 \-\-vdoPackerThreads=\fIthread count\fP
+\-\-vdoJournalThreads=\fIthread count\fP
 \-\-vdoPhysicalThreads=\fIthread count\fP
 \-\-vdoSlabSize=\fIsize\fP
 \-\-writePolicy=\*[writePolicy]
@@ -352,6 +356,7 @@ not affected. Applicable options include:
 \-\-vdoHashZoneThreads=\fIthread count\fP
 \-\-vdoLogicalThreads=\fIthread count\fP
 \-\-vdoPackerThreads=\fIthread count\fP
+\-\-vdoJournalThreads=\fIthread count\fP
 \-\-vdoPhysicalThreads=\fIthread count\fP
 \-\-confFile=\fIfile\fP
 \-\-logfile=\fIfile\fP
@@ -665,6 +670,11 @@ case sensitive; the default is \*[logLevelDefault].
 Specifies the number of threads which pack compressed block of data. The value
 must be at least \*[packerThreadsMin] and less than or equal to 
 \*[packerThreadsMax]. The default is \*[packerThreadsDefault].
+.TP
+.B \-\-vdoJournalThreads=\fIthread count\fR
+Specifies the number of threads to use for recovery journal. The value
+must be at least \*[journalThreadsMin] and less than or equal to 
+\*[journalThreadsMax]. The default is \*[journalThreadsDefault].
 .TP
 .B \-\-vdoPhysicalThreads=\fIthread count\fR
 Specifies the number of threads across which to subdivide parts of the VDO
